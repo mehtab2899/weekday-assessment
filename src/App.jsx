@@ -1,9 +1,9 @@
+import JobSearch from "./components/JobSearch"
+
 function App() {
 
   return (
-    <>
-      <h1>app</h1>
-    </>
+    <JobSearch />
   )
 }
 
