@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-
 import { makeStyles } from "@material-ui/styles"
 
 const SearchInput = (props) => {
@@ -7,7 +6,7 @@ const SearchInput = (props) => {
   const styles = stylesheet()
 
   const handleSearch = (e) => {
-    const value = e.target.value
+    const value = e.target.value.trim()
     onChange('companyName', value)
   }
 
@@ -20,11 +19,13 @@ const SearchInput = (props) => {
 
 const stylesheet = makeStyles({
   input: {
+    marginTop: 20,
     color: '#808080',
+    background: '#fff',
     display: 'flex',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
-    padding: 12,
+    padding: 13,
     border: '1px solid lightgray',
     cursor: 'pointer',
     borderRadius: 5,

@@ -22,6 +22,7 @@ const Filter = (props) => {
 const stylesheet = makeStyles({
   container: {
     display: 'flex',
+    flexWrap: 'wrap',
     alignItems: 'center',
     gap: 20,
   },

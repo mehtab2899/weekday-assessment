@@ -15,34 +15,51 @@ const Dropdown = (props) => {
   }
 
   const handleRoleChange = (type, role) => {
-    const isSelected = selectedRoles.some(item => item.value === role.value)
-    if (isSelected) {
-      setSelectedRoles(selectedRoles.filter(item => item.value !== role.value))
-    } else {
-      onFilterChange(type, [...selectedRoles, role])
-      setSelectedRoles([...selectedRoles, role])
-    }
+    const updatedRoles = [...selectedRoles]
+    updatedRoles.push(role)
+    onFilterChange(type, updatedRoles)
+    setSelectedRoles(updatedRoles)
+    toggleDropdown()
   }
 
   const clearAllRoles = () => {
     setSelectedRoles([])
     // Reset all filters by calling onFilterChange with empty values
     onFilterChange(type, [])
+    setIsOpen(false)
   }
 
   const clearRole = (roleToRemove) => {
-    // Remove the role to be cleared from selectedRoles state
+    // remove the role to be cleared from selectedRoles state
     const updatedRoles = selectedRoles.filter((role) => role.value !== roleToRemove.value);
     setSelectedRoles(updatedRoles);
 
-    // Call onFilterChange with the updated list of roles
+    // call onFilterChange with the updated list of roles
     onFilterChange(type, updatedRoles)
   }
 
   return (
     <div className={styles.dropdown}>
-      <div className={styles.dropdownHeader} onClick={toggleDropdown}>
+      <span
+        style={{ visibility: selectedRoles.length > 0 ? 'visible' : 'hidden' }}
+        className={styles.type}>
         {type}
+      </span>
+      <div className={styles.dropdownHeader} onClick={toggleDropdown}>
+        {selectedRoles.length === 0 && <p>{type}</p>}
+        {
+          selectedRoles.length > 0 && (
+            <div className={styles.selectedRoles}>
+              {selectedRoles.map(role => (
+                <span key={role.value} className={styles.selectedRole}>
+                  {role.label}
+                  <button onClick={() => clearRole(role)}>x</button>
+                </span>
+              ))}
+              <button className={styles.clearButton} onClick={clearAllRoles}>x</button>
+            </div>
+          )
+        }
         <span style={{ fontWeight: isOpen ? 900 : 500 }}>
           <img src={Arrow} alt='down-arrow' width={25} />
         </span>
@@ -50,46 +67,36 @@ const Dropdown = (props) => {
       {
         isOpen && (
           <div className={styles.dropdownContent}>
-            {data.map(roleGroup => (
-              <div key={roleGroup.type} className={styles.dropdownItem}>
-                <h3 className={styles.dropdownItemHeader}>{roleGroup.type}</h3>
-                {roleGroup.roles ?
-                  roleGroup.roles.map(role => (
-                    <label key={role.value} className={styles.dropdownItemLabel}>
+            {data
+              .map(roleGroup => (
+                <div key={roleGroup.type} className={styles.dropdownItem}>
+                  <h3 className={styles.dropdownItemHeader}>{roleGroup.type}</h3>
+                  {roleGroup.roles ?
+                    roleGroup.roles
+                      .filter(roleGroup => type === 'roles' && !selectedRoles.some(item => item.value === roleGroup.value))
+                      .map(role => (
+                        <label key={role.value} className={styles.dropdownItemLabel}>
+                          <input
+                            type="checkbox"
+                            value={role.value}
+                            checked={selectedRoles.some(item => item.value === role.value)}
+                            onChange={() => handleRoleChange(type, role)}
+                          />
+                          {role.label}
+                        </label>
+                      )) :
+                    <label key={roleGroup.value} className={styles.dropdownItemLabel}>
                       <input
                         type="checkbox"
-                        value={role.value}
-                        checked={selectedRoles.some(item => item.value === role.value)}
-                        onChange={() => handleRoleChange(type, role)}
+                        value={roleGroup.value}
+                        checked={selectedRoles.some(item => item.value === roleGroup.value)}
+                        onChange={() => handleRoleChange(type, roleGroup)}
                       />
-                      {role.label}
+                      {roleGroup.label}
                     </label>
-                  )) :
-                  <label key={roleGroup.value} className={styles.dropdownItemLabel}>
-                    <input
-                      type="checkbox"
-                      value={roleGroup.value}
-                      checked={selectedRoles.some(item => item.value === roleGroup.value)}
-                      onChange={() => handleRoleChange(type, roleGroup)}
-                    />
-                    {roleGroup.label}
-                  </label>
-                }
-              </div>
-            ))}
-          </div>
-        )
-      }
-      {
-        selectedRoles.length > 0 && (
-          <div>
-            {selectedRoles.map(role => (
-              <span key={role.value} className={styles.selectedRole}>
-                {role.label}
-                <button className={styles.clearButton} onClick={() => clearRole(role)}>x</button>
-              </span>
-            ))}
-            <button className={styles.clearButton} onClick={clearAllRoles}>Clear All</button>
+                  }
+                </div>
+              ))}
           </div>
         )
       }
@@ -100,8 +107,12 @@ const Dropdown = (props) => {
 const stylesheet = makeStyles({
   dropdown: {
     position: 'relative',
-    width: 200,
+    minWidth: 200,
     color: '#808080',
+  },
+  type: {
+    color: '#000',
+    textTransform: 'capitalize',
   },
   dropdownHeader: {
     display: 'flex',
@@ -112,6 +123,11 @@ const stylesheet = makeStyles({
     border: '1px solid lightgray',
     cursor: 'pointer',
     borderRadius: 5,
+    position: 'relative',
+
+    '& p': {
+      fontSize: 13,
+    },
 
     '& span': {
       borderLeft: '1px solid #cccccc',
@@ -120,7 +136,7 @@ const stylesheet = makeStyles({
   },
   dropdownContent: {
     position: 'absolute',
-    top: 50,
+    top: 70,
     left: 0,
     zIndex: 999,
     width: '100%',
@@ -137,24 +153,55 @@ const stylesheet = makeStyles({
   dropdownItemHeader: {
     marginBottom: 1,
     fontSize: 12,
+    textTransform: 'uppercase',
+    color: '#cccccc',
   },
   dropdownItemLabel: {
     display: 'block',
     marginBottom: 1,
+    color: '#000',
+    textTransform: 'capitalize',
 
     '& input[type="checkbox"]': {
       display: 'none',
-    }
+    },
+
+    '&:hover': {
+      backgroundColor: 'lightblue',
+    },
+  },
+  selectedRoles: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 10,
   },
   selectedRole: {
-    display: 'inline-block',
-    padding: 5,
-    marginRight: 1,
-    borderRadius: 10,
-    backgroundColor: 'gray',
+    display: 'flex',
+    backgroundColor: 'rgb(230, 230, 230)',
+    borderRadius: 2,
+    fontSize: 12,
+    padding: '3px 5px',
+
+    '& button': {
+      fontSize: 16,
+      marginLeft: 10,
+      padding: 2,
+      color: '#000',
+      border: 'none',
+      backgroundColor: 'transparent',
+      cursor: 'pointer',
+
+      '&:hover': {
+        background: 'orange',
+        color: 'red',
+      },
+    },
   },
   clearButton: {
-    marginLeft: 1,
+    fontSize: 20,
+    marginLeft: 50,
+    marginRight: 10,
+    color: 'rgb(204, 204, 204)',
     border: 'none',
     backgroundColor: 'transparent',
     cursor: 'pointer',
