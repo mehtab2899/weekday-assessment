@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 
 const useJobSearch = (url, pageLimit) => {
-  console.log('🚀 ~ file: useJobSearch.js:4 ~ useJobSearch ~ pageLimit:', pageLimit)
   const [data, setData] = useState({ jdList: [], totalPages: 0 })
   const [error, setError] = useState(null)
   const [hasMore, setHasMore] = useState(false)
@@ -37,7 +36,7 @@ const useJobSearch = (url, pageLimit) => {
       }
     }
     fetchData()
-  }, [pageLimit])
+  }, [url, pageLimit])
 
   return { data, error, hasMore }
 }
