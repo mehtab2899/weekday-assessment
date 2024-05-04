@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { makeStyles } from '@material-ui/styles'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import Arrow from '../../public/dropdown.svg'
 
@@ -9,6 +9,21 @@ const Dropdown = (props) => {
   const styles = stylesheet()
   const [selectedRoles, setSelectedRoles] = useState([])
   const [isOpen, setIsOpen] = useState(false)
+  const dropdownRef = useRef(null)
+
+  // close dropdown if clicked outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false)
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    };
+  }, [])
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen)
@@ -22,14 +37,15 @@ const Dropdown = (props) => {
     toggleDropdown()
   }
 
-  const clearAllRoles = () => {
+  const clearAllRoles = (e) => {
+    e.stopPropagation()
     setSelectedRoles([])
-    // Reset all filters by calling onFilterChange with empty values
+    // reset all filters by calling onFilterChange with empty values
     onFilterChange(type, [])
-    setIsOpen(false)
   }
 
-  const clearRole = (roleToRemove) => {
+  const clearRole = (e, roleToRemove) => {
+    e.stopPropagation()
     // remove the role to be cleared from selectedRoles state
     const updatedRoles = selectedRoles.filter((role) => role.value !== roleToRemove.value);
     setSelectedRoles(updatedRoles);
@@ -38,25 +54,32 @@ const Dropdown = (props) => {
     onFilterChange(type, updatedRoles)
   }
 
+  const typesMap = {
+    roles: 'roles',
+    minSalary: 'min base pay',
+    location: 'remote',
+    minExp: 'experience',
+  }
+
   return (
-    <div className={styles.dropdown}>
+    <div className={styles.dropdown} ref={dropdownRef}>
       <span
         style={{ visibility: selectedRoles.length > 0 ? 'visible' : 'hidden' }}
         className={styles.type}>
-        {type}
+        {typesMap[type]}
       </span>
       <div className={styles.dropdownHeader} onClick={toggleDropdown}>
-        {selectedRoles.length === 0 && <p>{type}</p>}
+        {selectedRoles.length === 0 && <p>{typesMap[type]}</p>}
         {
           selectedRoles.length > 0 && (
             <div className={styles.selectedRoles}>
               {selectedRoles.map(role => (
                 <span key={role.value} className={styles.selectedRole}>
                   {role.label}
-                  <button onClick={() => clearRole(role)}>x</button>
+                  <button onClick={(e) => clearRole(e, role)}>x</button>
                 </span>
               ))}
-              <button className={styles.clearButton} onClick={clearAllRoles}>x</button>
+              <button className={styles.clearButton} onClick={e => clearAllRoles(e)}>x</button>
             </div>
           )
         }
@@ -205,6 +228,10 @@ const stylesheet = makeStyles({
     border: 'none',
     backgroundColor: 'transparent',
     cursor: 'pointer',
+
+    '&:hover': {
+      color: "#000",
+    },
   },
 })
 

@@ -12,7 +12,6 @@ const JobCard = memo(({
   experience,
   minSalary,
   maxSalary,
-  currency,
 }) => {
 
   const styles = stylesheet()
@@ -51,9 +50,10 @@ const JobCard = memo(({
       <p className={styles.salary}>
         Estimated Salary:
         {' '}
-        {currency}
+        &#8377;
         {' '}
         {minSalary && maxSalary ? `${minSalary} - ${maxSalary}` : minSalary || maxSalary}
+        L
       </p>
       <div className={styles.about}>
         <h4>About Company:</h4>
@@ -123,6 +123,7 @@ const stylesheet = makeStyles({
       justifyContent: 'center',
       marginBottom: 20,
       cursor: 'pointer',
+      color: 'blue',
     },
 
     '& button': {
@@ -151,7 +152,6 @@ JobCard.propTypes = {
   experience: PropTypes.string.isRequired,
   minSalary: PropTypes.number.isRequired,
   maxSalary: PropTypes.number.isRequired,
-  currency: PropTypes.string.isRequired,
 }
 
 JobCard.displayName = JobCard

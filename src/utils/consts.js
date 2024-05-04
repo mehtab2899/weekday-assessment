@@ -10,13 +10,89 @@ export const roles = [
       { label: 'react native', value: 'react-native' },
       { label: 'android', value: 'android' },
       { label: 'tech lead', value: 'tech-lead' },
+      { label: 'dev-ops lead', value: 'dev-ops' },
+      { label: 'data science', value: 'data-science' },
+      { label: 'data engineer', value: 'data-engineer' },
+      { label: 'computer vision', value: 'computer vision' },
+      { label: 'nlp', value: 'nlp' },
+      { label: 'web3', value: 'web3' },
     ]
   },
   {
     type: 'Design',
     roles: [
-      { label: 'designer', value: 'designer' }
+      { label: 'designer', value: 'designer' },
+      { label: 'design manager', value: 'design manager' },
+      { label: 'graphic designer', value: 'graphic designer' },
+      { label: 'product designer', value: 'product designer' },
     ],
+  },
+  {
+    type: 'product',
+    roles: [
+      { label: 'product manager', value: 'product manager' }
+    ]
+  },
+  {
+    type: 'Marketing',
+    roles: [
+      { label: 'digital marketing manager', value: 'product-marketing-manager' },
+      { label: 'growth hacker', value: 'growth-hacker' },
+      { label: 'marketing', value: 'marketing' },
+      { label: 'product marketing manager', value: 'product-marketing-manager' },
+    ],
+  },
+  {
+    type: 'Other Engineering',
+    roles: [
+      { label: 'hardware', value: 'hardware' },
+      { label: 'mechanical', value: 'mechanical' },
+      { label: 'systems', value: 'systems' },
+    ],
+  },
+  {
+    type: 'Business Analyst',
+    roles: [
+      { label: 'business analyst', value: 'business-analyst' }
+    ],
+  },
+  {
+    type: 'Data Analyst',
+    roles: [
+      { label: 'data analyst', value: 'data-analyst' }
+    ],
+  },
+  {
+    type: 'Project Manager',
+    roles: [
+      { label: 'project manager', value: 'project-manager' }
+    ],
+  },
+  {
+    type: 'Management',
+    roles: [
+      { label: 'management', value: 'management' }
+    ],
+  },
+  {
+    type: 'Legal',
+    roles: [
+      { label: 'legal', value: 'legal' }
+    ],
+  },
+  {
+    type: 'HR',
+    roles: [
+      { label: 'hr', value: 'hr' }
+    ],
+  },
+  {
+    type: 'Finance',
+    roles: [
+      {
+        label: 'Finance', value: 'finance'
+      }
+    ]
   }
 ]
 
