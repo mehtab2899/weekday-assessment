@@ -34,7 +34,14 @@ const JobSearch = () => {
     const passesMinExp = filters.minExp.length === 0 || filters.minExp.some(role => job.minExp >= role.value)
     const passesCompanyName = !filters.companyName || job.companyName.toLowerCase().includes(filters.companyName.toLowerCase())
     const passesLocation = filters.location.length === 0 ||
-      filters.location.some(role => job.location.toLowerCase().includes(role.value.toLowerCase()))
+      filters.location.some(location => {
+        if (location.value === 'remote') {
+          return job.location.toLowerCase().includes(location.value.toLowerCase())
+        } else {
+          return job.location.toLowerCase() !== 'remote'
+        }
+      })
+
     const passesRoles = filters.roles.length === 0 || filters.roles.some(role => job.jobRole.toLowerCase().includes(role.value.toLowerCase()))
     const passesMinSalary = filters.minSalary.length === 0 || filters.minSalary.some(role => job.minJdSalary >= role.value)
 
@@ -67,6 +74,8 @@ const JobSearch = () => {
     const { jdLink, jobDetailsFromCompany, jobRole, companyName, logoUrl,
       location, maxJdSalary, minExp, minJdSalary,
     } = item
+    console.log('🚀 ~ file: JobSearch.jsx:91 ~ renderJob ~ jobRole:', jobRole)
+
     return (
       <JobCard
         logo={logoUrl}

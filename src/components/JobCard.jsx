@@ -54,6 +54,7 @@ const JobCard = memo(({
         {' '}
         {minSalary && maxSalary ? `${minSalary} - ${maxSalary}` : minSalary || maxSalary}
         L
+        <span aria-label="Offered salary range"> ✅</span>
       </p>
       <div className={styles.about}>
         <h4>About Company:</h4>
@@ -63,6 +64,7 @@ const JobCard = memo(({
       <div className={styles.footer}>
         <a href={link} target='_blank'>View Job</a>
         {renderProp('Minimun Experience', experience)}
+        {!experience && <div style={{ height: 30 }} />}
         <button type='button' onClick={applyHandler}>
           ⚡ Easy Apply
         </button>
@@ -128,6 +130,8 @@ const stylesheet = makeStyles({
 
     '& button': {
       marginTop: 20,
+      fontWeight: 900,
+      fontSize: 16,
       width: '100%',
       background: '#55efc4',
       border: 'none',
@@ -138,7 +142,7 @@ const stylesheet = makeStyles({
   },
   salary: {
     marginTop: 20,
-    color: '#162652',
+    color: 'rgb(77, 89, 106)',
   },
 })
 

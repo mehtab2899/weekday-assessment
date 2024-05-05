@@ -7,12 +7,12 @@ export const roles = [
       { label: 'fullstack', value: 'fullstack' },
       { label: 'ios', value: 'ios' },
       { label: 'flutter', value: 'flutter' },
-      { label: 'react native', value: 'react-native' },
+      { label: 'react native', value: 'react native' },
       { label: 'android', value: 'android' },
-      { label: 'tech lead', value: 'tech-lead' },
-      { label: 'dev-ops lead', value: 'dev-ops' },
-      { label: 'data science', value: 'data-science' },
-      { label: 'data engineer', value: 'data-engineer' },
+      { label: 'tech lead', value: 'tech lead' },
+      { label: 'dev-ops lead', value: 'dev ops' },
+      { label: 'data science', value: 'data science' },
+      { label: 'data engineer', value: 'data engineer' },
       { label: 'computer vision', value: 'computer vision' },
       { label: 'nlp', value: 'nlp' },
       { label: 'web3', value: 'web3' },
@@ -36,10 +36,10 @@ export const roles = [
   {
     type: 'Marketing',
     roles: [
-      { label: 'digital marketing manager', value: 'product-marketing-manager' },
+      { label: 'digital marketing manager', value: 'digital marketingmanager' },
       { label: 'growth hacker', value: 'growth-hacker' },
       { label: 'marketing', value: 'marketing' },
-      { label: 'product marketing manager', value: 'product-marketing-manager' },
+      { label: 'product marketing manager', value: 'product marketing manager' },
     ],
   },
   {
@@ -53,19 +53,19 @@ export const roles = [
   {
     type: 'Business Analyst',
     roles: [
-      { label: 'business analyst', value: 'business-analyst' }
+      { label: 'business analyst', value: 'business analyst' }
     ],
   },
   {
     type: 'Data Analyst',
     roles: [
-      { label: 'data analyst', value: 'data-analyst' }
+      { label: 'data analyst', value: 'data analyst' }
     ],
   },
   {
     type: 'Project Manager',
     roles: [
-      { label: 'project manager', value: 'project-manager' }
+      { label: 'project manager', value: 'project manager' }
     ],
   },
   {
