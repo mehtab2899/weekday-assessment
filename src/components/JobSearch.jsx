@@ -74,7 +74,6 @@ const JobSearch = () => {
     const { jdLink, jobDetailsFromCompany, jobRole, companyName, logoUrl,
       location, maxJdSalary, minExp, minJdSalary,
     } = item
-    console.log('🚀 ~ file: JobSearch.jsx:91 ~ renderJob ~ jobRole:', jobRole)
 
     return (
       <JobCard
@@ -97,7 +96,10 @@ const JobSearch = () => {
         <Filter onFilterChange={handleFilterChange} filters={filters} />
       </div>
       <div>{error && 'Error fetching jobs...'}</div>
-      <div>{filteredJobs.length === 0 && 'No Jobs available for this category at the moment'}</div>
+      {(filters.minExp || filters.companyName || filters.location || filters.roles.length > 0 || filters.minSalary) &&
+        filteredJobs.length === 0 && (
+          <div>No Jobs available for this category at the moment</div>
+        )}
       <Flatlist
         list={filteredJobs}
         listStyles={styles.lists}
