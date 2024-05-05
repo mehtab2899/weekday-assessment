@@ -2,10 +2,6 @@
 
 This project is a job search application that allows users to search for jobs based on various filters.
 
-## Live Demo
-
-Check out the live demo of the application [here](https://your-live-demo-url.com).
-
 ## Getting Started
 
 To get started with the project locally, follow these steps:
